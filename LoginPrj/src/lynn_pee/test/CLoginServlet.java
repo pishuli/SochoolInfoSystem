@@ -4,6 +4,7 @@ import java.io.IOException;
 //import java.util.HashMap;
 //import java.util.Map;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,6 +52,14 @@ public class CLoginServlet extends HttpServlet {
 		{
 			System.out.println(entry.getKey()+":"+entry.getValue());
 		}*/
+		String inputVCode = request.getParameter("vcode");
+		String vCode = (String) request.getSession().getAttribute("session_vcode");
+		if (!vCode.equalsIgnoreCase(inputVCode))
+		{
+			request.setAttribute("loginMessage", "验证码错误！");
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			return;
+		}
 		boolean isLoginSuc = false;
 		CStudentDB stuDB = new CStudentDB();
 		CStudentInfo stuInfo = new CStudentInfo();

@@ -24,6 +24,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    backgroud-color:#DDDDDD;
 	}
 	</style>
+	<script type="text/javascript">
+	function changeVCode(){
+		var imgVCode = document.getElementById("imgVCodeId");
+		imgVCode.src = "/LoginPrj/VerifyCodeServlet?a="+new Date().getTime();
+	}
+	</script>
   </head>
   
   <%-- <body background="pic/login_bk.jpg">--%>
@@ -33,19 +39,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <form action="/LoginPrj/CLoginServlet" method="post">
     <table>
         <tr>
-        	<td>user:</td> <td><input type="text" name="userId"></td>
+        	<td>用户名:</td> <td><input type="text" name="userId"></td>
     	</tr>
     	<tr>
-    		<td>pwd:</td> <td><input type="password" name="passwd"></td>
+    		<td>密码:</td> <td><input type="password" name="passwd"></td>
         </tr>
         <tr>
         </tr>
         <tr>
             <td>
-            </td> 
-            <td align = "right">
-            	<input type="submit" name = "login" value="login">
+                       验证码:
             </td>
+            <td>
+            <input type="text" name="vcode">
+            </td>
+            <td>
+            </td>
+            <td>
+                <img id="imgVCodeId" src="/LoginPrj/VerifyCodeServlet">
+                <a href="javascript:changeVCode()">换一张</a>
+            </td> 
+        </tr>
+        <tr>
+          <td align = "right">
+            	<input type="submit" name = "login" value="login">
+          </td>
         </tr>
     </table>
     </form>

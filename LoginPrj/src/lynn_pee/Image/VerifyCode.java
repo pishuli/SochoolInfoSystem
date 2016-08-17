@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 public class VerifyCode {
 	 private int width = 70;
 	 private int height = 35;
+	 private Color bgColor = new Color(255,255,255);
 	 private Random rand = new Random();
 	 private String[] fontNames= {"宋体","华文楷体","黑体","微软雅黑","楷体_GB2312"};
 	 private String codes = "23456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
@@ -21,6 +22,9 @@ public class VerifyCode {
 	 private BufferedImage createImage()
 	 {
 		 BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		 Graphics2D  g2 = (Graphics2D)img.createGraphics();
+		 g2.setColor(this.bgColor);
+		 g2.fillRect(0, 0, width, height);
 		 return img;
 	 }
 	 private Color randomColor()
@@ -70,8 +74,9 @@ public class VerifyCode {
 		 
 		 for (int i = 0; i < 4; i++)
 		 {
-			 String s = randomChar()+" ";
-			 sb.append(s);
+			 char ch = randomChar();
+			 String s = ch+" ";
+			 sb.append(ch);
 			 float x = i*1.0F*width/4;
 			 g2.setFont(randomFont());
 			 g2.setColor(randomColor());
@@ -81,7 +86,10 @@ public class VerifyCode {
 		 drawLine(img);
 		 return img;
 	 }
-	 
+	 public String getText()
+	 {
+		 return this.myText;
+	 }
 	 public static void output (BufferedImage img, OutputStream out) throws IOException
 	 {
 		 ImageIO.write(img, "JPEG", out);
